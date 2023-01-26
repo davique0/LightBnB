@@ -31,17 +31,6 @@ const getUserWithEmail = function(email) {
     .catch((err) => {
       console.log(err.message);
     });
-  // let user;
-  // for (const userId in users) {
-  //   user = users[userId];
-  //   if (user.email.toLowerCase() === email.toLowerCase()) {
-  //     break;
-  //   } else {
-  //     user = null;
-  //   }
-  // }
-  
-  // return Promise.resolve(user);
 }
 exports.getUserWithEmail = getUserWithEmail;
 
@@ -88,10 +77,6 @@ const addUser =  function(user) {
     .catch((err) => {
       console.log(err.message);
     });
-  // const userId = Object.keys(users).length + 1;
-  // user.id = userId;
-  // users[userId] = user;
-  // return Promise.resolve(user);
 }
 exports.addUser = addUser;
 
@@ -103,7 +88,23 @@ exports.addUser = addUser;
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function(guest_id, limit = 10) {
-  return getAllProperties(null, 2);
+  // return getAllProperties(null, 2);
+  const queryString = `
+  SELECT reservations.* FROM reservations
+  JOIN users ON users.id = reservations.guest_id
+  JOIN properties ON properties.id = reservations.property_id
+  WHERE reservations.guest_id = $1
+  LIMIT $2;`;
+  const values = [guest_id, limit]
+  return pool
+    .query(queryString, values)
+    .then((result) => {
+      console.log(result.rows[0])
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 }
 exports.getAllReservations = getAllReservations;
 
