@@ -117,8 +117,6 @@ exports.getAllReservations = getAllReservations;
  * @return {Promise<[{}]>}  A promise to the properties.
  */
 const getAllProperties = (options, limit) => {
-  // limit = 5;
-  // console.log(options)
   //Base part of SQL query
   let queryString = `SELECT properties.*, avg(property_reviews.rating) as average_rating
   FROM properties
@@ -153,33 +151,15 @@ const getAllProperties = (options, limit) => {
     queryParams.push(`${options.maximum_price_per_night * 100}`);
     queryString += ` AND cost_per_night <= $${queryParams.length}`;
   }
-
-  // if (options.minimum_price_per_night && options.maximum_price_per_night) {
-  //   const min = Number(options.minimum_price_per_night);
-  //   const max = Number(options.maximum_price_per_night);
-  //   queryParams.push(min, max);
-  //   queryString += `
-  //   OR (properties.cost_per_night >= $${queryParams.length-1}
-  //   AND properties.cost_per_night <= $${queryParams.length})`
-  // }
   queryString += ` GROUP BY properties.id `
   queryParams.push(limit);
   queryString += ` ORDER BY cost_per_night LIMIT $${queryParams.length};`;
-
-  //Limit entered by user
-  // queryParams.push(limit);
-  // queryString += `
-  // GROUP BY properties.id
-  // ORDER BY cost_per_night
-  // LIMIT $${queryParams.length};
-  // `;
-
   console.log(queryString, queryParams)
 
   return pool
     .query(queryString, queryParams)
     .then((result) => {
-      console.log(result.rows);
+      // console.log(result.rows);
       return result.rows;
     })
     .catch((err) => {
