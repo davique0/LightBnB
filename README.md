@@ -97,6 +97,20 @@ Install the LightBnB_WebApp `npm install`, run it `npm run local`, and view it a
 ### ERD DIAGRAM
   !["ERD DIAGRAM"](images/lightBnB.jpg)
 
+## Connect to Database
+ - Add node pg to database.js
+ - Add username, password and database name to pool
+
+```javascript
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  user: 'vagrant',
+  password: '123',
+  host: 'localhost',
+  database: 'lightbnb'
+});
+```
 
 ## Migrations
 ### [schema.sql](migrations/01_schema.sql)
@@ -135,3 +149,19 @@ Shows all details about properties located in Vancouver including their average 
  149 | Present television |          53062 | 4.2222222222222222
 (4 rows)
 ```
+
+## LightBnB Screenshots
+
+### Login
+  !["login page"](images/log_in_interface.png)
+
+### Home Page
+ !["Home Page"](images/logged_in_home_page.png)
+
+### New Listing
+ !["Create Listing"](images/create_new_listing.png)
+
+### My Reservations
+ !["My Reservations"](images/my_reservations.png)
+
+ 
