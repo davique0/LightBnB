@@ -1,5 +1,7 @@
 # LightBnB
 
+A database application project developed as a part of _[Lighthouse Labs Web development](https://www.lighthouselabs.ca/web-bootcamp)_ course. The front-end is forked from [lighthouse-labs/LightBnB_WebApp](https://github.com/lighthouse-labs/LightBnB_WebApp)
+
 ## Project Structure
 
 ```
@@ -43,8 +45,13 @@
   * `database.js` is responsible for all queries to the database. It doesn't currently connect to any database, all it does is return data from `.json` files.
 
   #
-A database application project developed as a part of _[Lighthouse Labs Web development](https://www.lighthouselabs.ca/web-bootcamp)_ course. The front-end is forked from [lighthouse-labs/LightBnB_WebApp](https://github.com/lighthouse-labs/LightBnB_WebApp)
-Install the LightBnB_WebApp `npm install`, run it `npm run local`, and view it at `localhost:3000`.
+## Getting Started
+
+1. Create a database called 'lightbnb' in psql
+2. Run the schema files to create the tables
+3. Run both 01_seeds.sql, and 02_seeds.sql to insert the data in your database
+4. Install the LightBnB_WebApp `npm install`, run it `npm run local`, and view it at `localhost:3000`.
+
 
 ## ERD 
 ### Info
