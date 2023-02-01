@@ -130,6 +130,7 @@ const getAllProperties = (options, limit) => {
   //if there is a city entered in search, add that city in the query
   if (options.city) {
     //enter new value to queryParams
+    options.city = options.city.toLowerCase().slice(1)
     queryParams.push(`%${options.city}%`);
     //add new query to the base query string
     queryString += `AND city LIKE $${queryParams.length}`;
