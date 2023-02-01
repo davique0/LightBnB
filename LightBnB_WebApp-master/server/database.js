@@ -116,6 +116,7 @@ const getAllProperties = (options, limit) => {
   let queryString = `SELECT properties.*, avg(property_reviews.rating) as average_rating
   FROM properties
   LEFT JOIN property_reviews ON properties.id = property_id
+  WHERE 1 = 1
   `
   //values used to show queries depending on user entry
   let queryParams = [];
@@ -123,7 +124,7 @@ const getAllProperties = (options, limit) => {
   //if "my lisings" is selected
   if (options.owner_id) {
     queryParams.push(`${options.owner_id}`);
-    queryString += `WHERE owner_id = $${queryParams.length}`
+    queryString += `AND owner_id = $${queryParams.length}`
   }
 
   //if there is a city entered in search, add that city in the query
@@ -131,7 +132,7 @@ const getAllProperties = (options, limit) => {
     //enter new value to queryParams
     queryParams.push(`%${options.city}%`);
     //add new query to the base query string
-    queryString += `WHERE city LIKE $${queryParams.length}`;
+    queryString += `AND city LIKE $${queryParams.length}`;
   } 
 
   //if a minimum and maximum price per night is entered
