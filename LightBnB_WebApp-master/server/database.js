@@ -130,7 +130,6 @@ const getAllProperties = (options, limit) => {
   //if there is a city entered in search, add that city in the query
   if (options.city) {
     //enter new value to queryParams
-    options.city = options.city.toLowerCase().slice(1)
     queryParams.push(`%${options.city}%`);
     //add new query to the base query string
     queryString += `AND city LIKE $${queryParams.length}`;
@@ -147,8 +146,18 @@ const getAllProperties = (options, limit) => {
     queryString += ` AND cost_per_night <= $${queryParams.length}`;
   }
   queryString += ` GROUP BY properties.id `
+
+  //If user enters minimum rating requirment
+  if (options.minimum_rating) {
+    queryParams.push(`${options.minimum_rating}`);
+    queryString += ` HAVING avg(property_reviews.rating) >= $${queryParams.length}`;
+
+  }
   queryParams.push(limit);
   queryString += ` ORDER BY cost_per_night LIMIT $${queryParams.length};`;
+
+  console.log(options)
+
 
   return pool
     .query(queryString, queryParams)
